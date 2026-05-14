@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d1117">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Основные SEO-теги -->
+    <title>Проверить индексацию сайта в Google — есть ли сайт в выдаче</title>
+    <meta name="description" content="Сервис проверки: есть ли сайт в выдаче Гугл, есть ли сайт в поиске Гугл. Узнайте, как узнать индексируется ли сайт, выполните проверку индексации сайта в Google и проверку сайта в поисковиках онлайн.">
+    <meta name="keywords" content="есть ли сайт в выдаче гугл, есть ли сайт в поиске гугл, есть ли сайт в выдаче, проверить индексацию сайта в google, проверка сайта в поисковиках, как узнать индексируется ли сайт">
+
+    <!-- Open Graph без изображений -->
+    <meta property="og:title" content="Проверить индексацию сайта в Google — есть ли сайт в выдаче">
+    <meta property="og:description" content="Сервис проверки: есть ли сайт в выдаче Гугл, есть ли сайт в поиске Гугл. Узнайте, как узнать индексируется ли сайт, выполните проверку индексации сайта в Google и проверку сайта в поисковиках онлайн.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="Google Index Checker">
+
+    <!-- Шрифт Inter с Google Fonts (только текст, без изображений) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-color: #30363d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-red: #f85149;
+            --accent-orange: #d2991d;
+            --telegram-blue: #0088cc;
+            --telegram-blue-hover: #0099e6;
+            --article-blue: #4a9eff;    /* Цвет для кнопки статьи */
+            --shadow-light: 0 2px 6px rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.5);
+            --transition-speed: 0.25s;
+            --border-radius-sm: 10px;
+            --border-radius-md: 14px;
+            --border-radius-lg: 18px;
+            --max-width: 1200px;
+        }
+
+        html {
+            font-size: 18px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            line-height: 1.6;
+            padding: 16px;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 30px 10px 14px;
+        }
+
+        .header h1 {
+            font-size: clamp(2.2rem, 6vw, 3.2rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .main {
+            width: 100%;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 36px 30px;
+            margin: 16px 0;
+            box-shadow: var(--shadow-medium);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 26px;
+        }
+
+        .search-box {
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px 22px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            background-color: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            color: var(--text-primary);
+            outline: none;
+            transition: all var(--transition-speed) ease;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15), inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            background-color: #1c2129;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: inherit;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 0.02em;
+            box-shadow: var(--shadow-light);
+            outline: none;
+            white-space: nowrap;
+            flex: 1 1 auto;
+            min-width: 220px;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-blue);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(88, 166, 255, 0.08);
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+            background-color: rgba(88, 166, 255, 0.15);
+        }
+
+        .result-block {
+            width: 100%;
+            padding: 24px 20px;
+            border-radius: var(--border-radius-md);
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            font-weight: 500;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            min-height: 80px;
+            transition: all 0.3s ease;
+            word-break: break-word;
+        }
+
+        .result-block.success {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            background-color: rgba(63, 185, 80, 0.05);
+        }
+
+        .result-block.error {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+            background-color: rgba(248, 81, 73, 0.05);
+        }
+
+        .result-block.warning {
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+            background-color: rgba(210, 153, 29, 0.05);
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: currentColor;
+            flex-shrink: 0;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        .footer {
+            width: 100%;
+            max-width: var(--max-width);
+            margin-top: auto;
+            padding: 24px 10px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 30px;
+        }
+
+        .footer-note {
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .footer-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+        }
+
+        .btn-telegram,
+        .btn-article {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            font-family: inherit;
+            padding: 14px 28px;
+            border-radius: var(--border-radius-sm);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: all var(--transition-speed) ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-telegram {
+            background-color: var(--telegram-blue);
+            color: #ffffff;
+        }
+
+        .btn-telegram:hover {
+            background-color: var(--telegram-blue-hover);
+            box-shadow: 0 6px 18px rgba(0, 136, 204, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-article {
+            background-color: var(--article-blue);
+            color: #ffffff;
+        }
+
+        .btn-article:hover {
+            background-color: #6db3ff;
+            box-shadow: 0 6px 18px rgba(74, 158, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-telegram:active,
+        .btn-article:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-telegram:focus-visible,
+        .btn-article:focus-visible {
+            outline: 2px solid #ffffff;
+            outline-offset: 2px;
+        }
+
+        @media screen and (max-width: 768px) {
+            html {
+                font-size: 16px;
+            }
+            body {
+                padding: 10px;
+            }
+            .header {
+                padding: 20px 8px 10px;
+            }
+            .main {
+                padding: 24px 18px;
+                gap: 20px;
+            }
+            .btn {
+                padding: 14px 24px;
+                font-size: 1rem;
+                min-width: 180px;
+            }
+            .button-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .search-box input {
+                padding: 16px 18px;
+                font-size: 1rem;
+            }
+            .footer {
+                padding: 16px 8px 12px;
+            }
+            .footer-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .header h1 {
+                font-size: 1.9rem;
+            }
+            .header .subtitle {
+                font-size: 0.9rem;
+            }
+            .btn {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+
+        @media screen and (min-width: 1600px) {
+            :root {
+                --max-width: 1400px;
+            }
+            html {
+                font-size: 20px;
+            }
+            .main {
+                padding: 44px 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Проверка индексации сайта в Google</h1>
+            <p class="subtitle">
+                <span>Есть ли сайт в выдаче Гугл?</span> Сервис позволяет быстро узнать, <strong>есть ли сайт в поиске Гугл</strong>, 
+                и понять, <strong>как узнать индексируется ли сайт</strong>. Просто введите URL и выполните 
+                <strong>проверку сайта в поисковиках</strong> прямо сейчас.
+            </p>
+        </header>
+
+        <main class="main">
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="urlInput"
+                    placeholder="Введите URL сайта (например, https://example.com)..."
+                    aria-label="Введите URL сайта для проверки индексации"
+                    autocomplete="url"
+                    spellcheck="false"
+                >
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" id="btnSiteOperator" type="button">
+                    🔍 Проверить через site:
+                </button>
+            </div>
+
+            <div id="resultBlock" class="result-block" style="display: none;"></div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-buttons">
+                <!-- Новая кнопка "Как добавить сайт в Google" -->
+                <a
+                    href="https://developers.google.com/search/docs/fundamentals/get-on-google?hl=ru"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-article"
+                    aria-label="Статья: как добавить сайт в поиск Google"
+                >
+                    📘 Как добавить сайт в Google
+                </a>
+
+                <!-- Кнопка Telegram -->
+                <a
+                    href="https://t.me/usernamechats"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-telegram"
+                    aria-label="Наш телеграм канал"
+                >
+                    ✈️ наш телеграм канал
+                </a>
+            </div>
+            <p class="footer-note">*другие сайты проекта, связь с владельцем и т.д. в нашем телеграм канале*</p>
+        </footer>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const urlInput = document.getElementById('urlInput');
+            const btnSiteOperator = document.getElementById('btnSiteOperator');
+            const resultBlock = document.getElementById('resultBlock');
+
+            function isValidUrl(urlString) {
+                if (!urlString) return false;
+                let urlToTest = urlString.trim();
+                if (!/^https?:\/\//i.test(urlToTest)) {
+                    urlToTest = 'https://' + urlToTest;
+                }
+                try {
+                    const url = new URL(urlToTest);
+                    return url.hostname.includes('.') && url.hostname.length > 3;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function extractHostname(urlString) {
+                let urlToTest = urlString.trim();
+                if (!/^https?:\/\//i.test(urlToTest)) {
+                    urlToTest = 'https://' + urlToTest;
+                }
+                try {
+                    const url = new URL(urlToTest);
+                    return url.hostname;
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function showResult(message, type) {
+                resultBlock.style.display = 'flex';
+                resultBlock.innerHTML = '';
+                resultBlock.classList.remove('success', 'error', 'warning');
+
+                const dot = document.createElement('span');
+                dot.className = 'status-dot';
+                resultBlock.appendChild(dot);
+                const text = document.createElement('span');
+                text.textContent = message;
+                resultBlock.appendChild(text);
+
+                if (type === 'success') resultBlock.classList.add('success');
+                else if (type === 'error') resultBlock.classList.add('error');
+                else if (type === 'warning') resultBlock.classList.add('warning');
+            }
+
+            function hideResult() {
+                resultBlock.style.display = 'none';
+                resultBlock.innerHTML = '';
+                resultBlock.classList.remove('success', 'error', 'warning');
+            }
+
+            function checkViaSiteOperator() {
+                const rawUrl = urlInput.value.trim();
+                if (!rawUrl) {
+                    showResult('Введите URL сайта для проверки.', 'warning');
+                    return;
+                }
+                if (!isValidUrl(rawUrl)) {
+                    showResult('Некорректный URL. Убедитесь, что адрес введён правильно (например, https://example.com).', 'error');
+                    return;
+                }
+
+                const hostname = extractHostname(rawUrl);
+                if (!hostname) {
+                    showResult('Не удалось извлечь домен из URL.', 'error');
+                    return;
+                }
+
+                const searchQuery = `site:${hostname}`;
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+                window.open(googleSearchUrl, '_blank', 'noopener,noreferrer');
+                showResult(`Открыта новая вкладка с запросом "site:${hostname}". Проверьте результаты.`, 'success');
+            }
+
+            btnSiteOperator.addEventListener('click', checkViaSiteOperator);
+
+            urlInput.addEventListener('input', function () {
+                if (resultBlock.style.display !== 'none') {
+                    hideResult();
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && document.activeElement === urlInput) {
+                    e.preventDefault();
+                    checkViaSiteOperator();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
